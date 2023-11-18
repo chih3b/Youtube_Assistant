@@ -8,7 +8,7 @@ from langchain.document_loaders import YoutubeLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 load_dotenv()
-embeddings = OpenAIEmbeddings(openai_api_key="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")
+embeddings = OpenAIEmbeddings(openai_api_key="put your api key here")
 
 
 def create_vector_db_from_youtube_url(video_url: str) -> FAISS:
@@ -23,7 +23,7 @@ def create_vector_db_from_youtube_url(video_url: str) -> FAISS:
 def get_responses_from_query(db, query, k=5):
     docs = db.similarity_search(query, k=k)
     docs_page_content = "".join([d.page_content for d in docs])
-    llm = OpenAI(openai_api_key="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", model="text-davinci-003")
+    llm = OpenAI(openai_api_key="put your api key here", model="text-davinci-003")
     prompt = PromptTemplate(input_variables=["question", "docs"],
                             template="you are a helpful youtube assistant.answer this question {question} by searching the following video transcript {docs} and if you don't have enough information say 'I don't know'")
     chain = LLMChain(llm=llm, prompt=prompt)
